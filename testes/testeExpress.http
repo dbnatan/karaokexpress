@@ -1,0 +1,112 @@
+###
+GET http://localhost:3000/
+
+###
+GET http://www.google.com
+
+###
+GET http://localhost:3000/musicas/1
+
+###
+GET http://localhost:3000/musicas/1/partes/1
+
+###
+GET http://localhost:3000/musicas/1/play
+
+###
+POST http://localhost:3000/musicas/1/partes HTTP/1.1
+Content-Type: application/json
+meu-header: vale1
+
+{
+    "letra": "Outra LETRA QUE EU ADICIONEI",
+    "tag": "minhaParte 2",
+    "tempoEspera": 3000
+}
+
+
+
+###
+POST http://localhost:3000/musicas/0/partes
+Content-Type: application/json
+
+isso nao e um JSON
+
+###
+GET http://localhost:3000/api/musicas
+
+###
+GET http://localhost:3000/api/musicas/0
+
+###
+GET http://localhost:3000/api/musicas/999
+
+###
+POST http://localhost:3000/api/musicas
+Content-Type: application/json
+
+{
+    "nome": "Smells Like Teen Spirit",
+    "artista": "Nirvana"
+}
+
+###
+POST http://localhost:3000/api/musicas
+Content-Type: application/json
+
+{
+    "nome": "Faltando artista"
+}
+
+###
+PUT http://localhost:3000/api/musicas/0
+Content-Type: application/json
+
+{
+    "nome": "My Hero (Live)",
+    "artista": "Foo Fighters (Wembley 2008)"
+}
+
+###
+PUT http://localhost:3000/api/musicas/999
+Content-Type: application/json
+
+{
+    "nome": "Nao existe",
+    "artista": "Ninguem"
+}
+
+###
+DELETE http://localhost:3000/api/musicas/0
+
+###
+DELETE http://localhost:3000/api/musicas/999
+
+###
+POST http://localhost:3000/api/musicas/0/partes
+Content-Type: application/json
+
+{
+    "letra": "Uma nova parte da música",
+    "tempoEspera": 3000,
+    "tag": "versoNovo"
+}
+
+###
+POST http://localhost:3000/api/musicas/0/partes
+Content-Type: application/json
+
+{
+    "letra": "Parte sem tag",
+    "tempoEspera": 3000
+}
+
+###
+POST http://localhost:3000/api/musicas/999/partes
+Content-Type: application/json
+
+{
+    "letra": "Parte para música inexistente",
+    "tempoEspera": 3000,
+    "tag": "teste"
+}
