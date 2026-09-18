@@ -5,10 +5,10 @@
   "license": "ISC",
   "author": "Elder Bernardi",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "node app.js",
     "teste": "echo SCRIPT de teste! ",
     "karaoke": "node ./karaoke/player",
     "serve": "nodemon app"
@@ -16,5 +16,8 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "express": "^5.2.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
