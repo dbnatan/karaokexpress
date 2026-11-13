@@ -1,32 +1,26 @@
-
 class Musica {
+  constructor(nome, artista) {
+    this.nome = nome;
+    this.artista = artista;
+    this.partes = [];
+  }
 
-    constructor(nome, artista) {
-        //atributos com this.atrib
-        this.nome = nome;
-        this.artista = artista;
-        this.partes = []; // associacao com Parte
+  addParte(parte) {
+    // Removi a validação rígida de "tag" porque a tag pode ser nula no banco
+    if (!parte || !parte.letra || parte.tempoEspera === undefined) {
+      throw new Error("Parte da Musica com problema!");
     }
 
-    //metodos
-    addParte(parte) { //parte é objeto de Parte
-        if (!parte || !parte.letra || !parte.tempoEspera || !parte.tag) {
-            throw new Error('Parte da Musica com problema!');
-        }
+    this.partes.push(parte);
+  }
 
-        this.partes.push(parte);
-    }
-
-    getLetraInteira(){
-        // this.partes -->todas as partes
-
-        let letra = "";
-
-        this.partes.forEach((parte) => {
-            letra += parte.letra;
-        });
-        return letra;
-    }
+  getLetraInteira() {
+    let letra = "";
+    this.partes.forEach((parte) => {
+      letra += parte.letra;
+    });
+    return letra;
+  }
 }
 
-module.exports = {Musica};
+module.exports = { Musica };

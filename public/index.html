@@ -1,32 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karaokê — Player</title>
-    <link rel="stylesheet" href="estilo.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karaokê — Player e Admin</title>
+    <link rel="stylesheet" href="estilo.css" />
+  </head>
+  <body>
     <header>
-        <h1>🎤 Karaokê</h1>
+      <h1>🎤 Karaokê</h1>
     </header>
 
     <main>
-        <aside id="playlist">
-            <h2>Músicas</h2>
-            <ul id="listaMusicas"></ul>
-        </aside>
+      <!-- COLUNA 1: PLAYLIST -->
+      <aside id="playlist">
+        <h2>Músicas</h2>
+        <ul id="listaMusicas"></ul>
+      </aside>
 
-        <section id="palco">
-            <h2 id="nomeMusica">Escolha uma música</h2>
-            <p id="artista"></p>
-            <p id="tag"></p>
-            <p id="letra"></p>
-            <p id="contador"></p>
-            <button id="btnTocar" disabled>▶ Tocar</button>
-        </section>
+      <!-- COLUNA 2: PALCO DO PLAYER -->
+      <section id="palco">
+        <h2 id="nomeMusica">Escolha uma música</h2>
+        <p id="artista"></p>
+        <p id="tag"></p>
+        <p id="letra"></p>
+        <p id="contador"></p>
+        <button id="btnTocar" disabled>▶ Tocar</button>
+      </section>
+
+      <!-- COLUNA 3: PAINEL DE ADMINISTRAÇÃO (CRUD) -->
+      <aside
+        id="admin"
+        style="
+          width: 300px;
+          background: #1e1e1e;
+          border-radius: 12px;
+          padding: 16px;
+        "
+      >
+        <h2 style="font-size: 1rem; color: #1db954; margin-bottom: 16px">
+          Administração
+        </h2>
+
+        <form id="formMusica">
+          <input type="hidden" id="inputId" />
+
+          <label for="inputNome">Nome da Música:</label>
+          <input
+            type="text"
+            id="inputNome"
+            placeholder="Ex: My Hero"
+            style="width: 100%; margin-bottom: 10px; padding: 8px"
+          />
+
+          <label for="inputArtista">Artista:</label>
+          <input
+            type="text"
+            id="inputArtista"
+            placeholder="Ex: Foo Fighters"
+            style="width: 100%; margin-bottom: 10px; padding: 8px"
+          />
+
+          <div style="display: flex; gap: 8px">
+            <button
+              type="submit"
+              id="btnSalvar"
+              style="
+                flex: 1;
+                padding: 8px;
+                background: #1db954;
+                color: #000;
+                border: none;
+                cursor: pointer;
+                border-radius: 4px;
+              "
+            >
+              Salvar
+            </button>
+            <button
+              type="button"
+              id="btnNovo"
+              style="
+                flex: 1;
+                padding: 8px;
+                background: #555;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                border-radius: 4px;
+              "
+            >
+              Nova Música
+            </button>
+          </div>
+        </form>
+
+        <div style="display: flex; gap: 8px; margin-top: 10px">
+          <button
+            type="button"
+            id="btnExcluir"
+            disabled
+            style="
+              width: 100%;
+              padding: 8px;
+              background: #dc3545;
+              color: #fff;
+              border: none;
+              cursor: pointer;
+              border-radius: 4px;
+            "
+          >
+            Excluir Selecionada
+          </button>
+        </div>
+
+        <div
+          id="mensagem"
+          style="margin-top: 16px; font-size: 0.9rem; text-align: center"
+        ></div>
+      </aside>
     </main>
 
     <script src="player.js"></script>
-</body>
+  </body>
 </html>

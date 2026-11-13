@@ -84,3 +84,13 @@ Content-Type: application/json
   "tempoEspera": 3000,
   "tag": "teste"
 }
+
+### Adicionar uma parte na Música 1 (R6)
+POST http://localhost:3000/api/musicas/2/partes
+Content-Type: application/json
+
+{
+    "letra": "There goes my hero\nWatch him as he goes",
+    "tempoEspera": 3000,
+    "tag": "refrão"
+}
