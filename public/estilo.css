@@ -1,29 +1,29 @@
-/* Karaokê — Soft Lavender + Glass */
+/* Karaokê — Amarelo, Laranja e Marrom + Glass */
 :root {
-  --color-background: #dee1eb;
-  --color-surface: #f8f8fc;
-  --color-surface-alt: #e8e5f5;
-  --color-primary: #695bac;
-  --color-primary-light: #7769ba;
-  --color-primary-dark: #493c88;
-  --color-accent: #ee6891;
-  --color-accent-light: #f5dce7;
-  --color-danger-text: #a3254f;
-  --color-text: #29283a;
-  --color-text-secondary: #5e5e74;
-  --color-border: #c5c9da;
-  --color-selected-text: #493c88;
+  --color-background: #fff3d6;
+  --color-surface: #fff9ed;
+  --color-surface-alt: #ffe3a0;
+  --color-primary: #fdbb1a;
+  --color-primary-light: #f9a01b;
+  --color-primary-dark: #6b3a2a;
+  --color-accent: #f47b30;
+  --color-accent-light: #fbe3d6;
+  --color-danger-text: #a02e14;
+  --color-text: #4a2418;
+  --color-text-secondary: #7a5446;
+  --color-border: rgba(122, 84, 70, 0.35);
+  --color-selected-text: #6b3a2a;
 
   /* glass */
   --glass-bg: rgba(255, 255, 255, 0.55);
   --glass-border: rgba(255, 255, 255, 0.75);
   --row-hover: rgba(255, 255, 255, 0.5);
   --row-on: rgba(255, 255, 255, 0.88);
-  --chip-bg: rgba(232, 229, 245, 0.95);
+  --chip-bg: rgba(255, 228, 160, 0.95);
   --field-bg: rgba(255, 255, 255, 0.8);
-  --mesh-a: #c9c0f0;
-  --mesh-b: #f5c6d8;
-  --mesh-c: #bfd4f2;
+  --mesh-a: #fdbb1a;
+  --mesh-b: #f9a56b;
+  --mesh-c: #ffe3a0;
 
   --font-heading: "Manrope", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -33,9 +33,9 @@
   --radius-xl: 32px;
   --radius-full: 9999px;
 
-  --shadow-glass: 0 8px 24px rgba(75, 65, 120, 0.08);
-  --shadow-elevated: 0 16px 40px rgba(75, 65, 120, 0.18);
-  --shadow-button: 0 5px 14px rgba(105, 91, 172, 0.2);
+  --shadow-glass: 0 8px 24px rgba(110, 60, 30, 0.08);
+  --shadow-elevated: 0 16px 40px rgba(244, 123, 48, 0.28);
+  --shadow-button: 0 5px 14px rgba(244, 123, 48, 0.3);
 
   --duration-fast: 150ms;
   --duration-normal: 250ms;
@@ -48,28 +48,32 @@
 /* ---------- Tema escuro ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-background: #17162a;
-  --color-surface: #252340;
-  --color-surface-alt: #36325f;
-  --color-accent-light: #4a2a3c;
-  --color-danger-text: #f7a8c2;
-  --color-text: #edebfa;
-  --color-text-secondary: #a9a8c4;
-  --color-border: #4a4770;
-  --color-selected-text: #d5cff7;
+  --color-background: #1e120d;
+  --color-surface: #342016;
+  --color-surface-alt: #4a2a1a;
+  --color-primary: #fdbb1a;
+  --color-primary-light: #f9a01b;
+  --color-primary-dark: #7a4a10;
+  --color-accent: #f47b30;
+  --color-accent-light: rgba(160, 46, 20, 0.35);
+  --color-danger-text: #ffb59a;
+  --color-text: #f6e7d8;
+  --color-text-secondary: #c9a98f;
+  --color-border: rgba(255, 255, 255, 0.2);
+  --color-selected-text: #fdbb1a;
 
-  --glass-bg: rgba(37, 35, 64, 0.55);
+  --glass-bg: rgba(52, 32, 22, 0.6);
   --glass-border: rgba(255, 255, 255, 0.12);
   --row-hover: rgba(255, 255, 255, 0.08);
   --row-on: rgba(255, 255, 255, 0.16);
-  --chip-bg: rgba(54, 50, 95, 0.9);
-  --field-bg: rgba(29, 27, 53, 0.7);
-  --mesh-a: #3b3478;
-  --mesh-b: #5a2d4c;
-  --mesh-c: #1f3a66;
+  --chip-bg: rgba(253, 187, 26, 0.18);
+  --field-bg: rgba(30, 18, 13, 0.7);
+  --mesh-a: #7a4a10;
+  --mesh-b: #7a2e10;
+  --mesh-c: #4a2a14;
 
-  --shadow-glass: 0 8px 24px rgba(0, 0, 0, 0.3);
-  --shadow-elevated: 0 16px 40px rgba(0, 0, 0, 0.4);
+  --shadow-glass: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -100,7 +104,7 @@ body {
   padding: 32px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centraliza na vertical (ex.: em tela cheia com F11) */
+  justify-content: center;
   gap: 24px;
 }
 
@@ -143,6 +147,16 @@ header {
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-button);
+}
+
+/* Ícones */
+.logo svg,
+.avatar svg {
+  stroke: var(--color-brown-dark, #4a2418);
+}
+
+#barraTocar svg {
+  fill: #4a2418;
 }
 
 header h1 {
@@ -206,19 +220,24 @@ header h1 {
   background: var(--row-hover);
   transform: rotate(12deg);
 }
+
 #btnTema:focus-visible {
-  outline: 3px solid rgba(105, 91, 172, 0.45);
+  outline: 3px solid rgba(244, 123, 48, 0.55);
   outline-offset: 2px;
 }
+
 :root[data-theme="dark"] #btnTema {
-  color: #f5c86a;
+  color: #fdbb1a;
 }
+
 #btnTema .icone-sol {
   display: none;
 }
+
 :root[data-theme="dark"] #btnTema .icone-sol {
   display: block;
 }
+
 :root[data-theme="dark"] #btnTema .icone-lua {
   display: none;
 }
@@ -227,7 +246,7 @@ header h1 {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-accent), #f78eae);
+  background: linear-gradient(135deg, #f47b30, #fdbb1a);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -281,14 +300,13 @@ main {
   transform: translateY(-2px);
 }
 
-/* classes possíveis para a música selecionada — ajuste ao que o player.js usa */
 #playlist li.selecionada,
 #playlist li.ativa,
 #playlist li.active {
   background: var(--row-on);
   color: var(--color-selected-text);
   font-weight: 600;
-  box-shadow: 0 5px 14px rgba(75, 65, 120, 0.1);
+  box-shadow: 0 5px 14px rgba(110, 60, 30, 0.1);
 }
 
 /* ---------- Palco ---------- */
@@ -297,14 +315,10 @@ main {
   min-width: 0;
   position: relative;
   overflow: hidden;
-  color: #fff;
+  color: #4a2418;
   padding: 32px;
   border-radius: var(--radius-xl);
-  background: linear-gradient(
-    145deg,
-    rgba(105, 91, 172, 0.96),
-    rgba(119, 105, 186, 0.92)
-  );
+  background: linear-gradient(145deg, #fdbb1a, #f9a01b);
   box-shadow: var(--shadow-elevated);
   display: flex;
   flex-direction: column;
@@ -320,7 +334,7 @@ main {
   width: 260px;
   height: 260px;
   border-radius: var(--radius-full);
-  background: var(--color-accent);
+  background: #f47b30;
   opacity: 0.35;
   filter: blur(60px);
   pointer-events: none;
@@ -341,9 +355,9 @@ main {
   width: 150px;
   height: 150px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #f78eae, #8275c5);
+  background: linear-gradient(135deg, #f47b30, #c8481a);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 16px 40px rgba(45, 40, 80, 0.3);
+  box-shadow: 0 16px 40px rgba(110, 60, 30, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -364,7 +378,8 @@ main {
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.18);
+  background: #6b3a2a;
+  color: #fdbb1a;
   padding: 6px 16px;
   border-radius: var(--radius-full);
 }
@@ -382,18 +397,19 @@ main {
 
 #artista {
   font-size: 16px;
-  color: var(--color-surface-alt);
+  color: #6b3a2a;
 }
+
 :root[data-theme="dark"] #artista {
-  color: #d5cff7;
+  color: #6b3a2a;
 }
 
 .painel-letra {
   text-align: center;
   padding: 32px 24px;
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
@@ -404,14 +420,13 @@ main {
   font-size: 28px;
   line-height: 1.3;
   min-height: 4.5rem;
-  /* as letras vêm com \n — pre-line transforma em quebra de linha real */
   white-space: pre-line;
 }
 
 #contador {
   margin-top: 8px;
   font-size: 18px;
-  color: #e8e5f5;
+  color: #6b3a2a;
 }
 
 #btnTocar {
@@ -423,10 +438,10 @@ main {
   padding: 0 40px;
   border: none;
   border-radius: var(--radius-full);
-  background: #fff;
-  color: var(--color-primary);
+  background: #6b3a2a;
+  color: #fff;
   cursor: pointer;
-  box-shadow: 0 5px 14px rgba(45, 40, 80, 0.2);
+  box-shadow: 0 5px 14px rgba(74, 36, 24, 0.3);
   transition:
     transform var(--duration-normal) var(--ease-standard),
     box-shadow var(--duration-normal) var(--ease-standard);
@@ -434,12 +449,12 @@ main {
 
 #btnTocar:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(45, 40, 80, 0.26);
+  box-shadow: 0 10px 24px rgba(74, 36, 24, 0.36);
 }
 
 #btnTocar:disabled {
-  background: rgba(255, 255, 255, 0.28);
-  color: rgba(255, 255, 255, 0.85);
+  background: rgba(74, 36, 24, 0.18);
+  color: rgba(74, 36, 24, 0.6);
   box-shadow: none;
   cursor: not-allowed;
 }
@@ -475,8 +490,8 @@ main {
 #admin input[type="text"]:focus,
 .busca input:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(105, 91, 172, 0.2);
+  border-color: #f47b30;
+  box-shadow: 0 0 0 3px rgba(244, 123, 48, 0.3);
 }
 
 input::placeholder {
@@ -507,17 +522,14 @@ input::placeholder {
   gap: 12px;
   margin-top: 8px;
 }
+
 #admin .acoes button {
   flex: 1;
 }
 
 #btnSalvar {
-  background: linear-gradient(
-    135deg,
-    var(--color-primary),
-    var(--color-primary-light)
-  );
-  color: #fff;
+  background: linear-gradient(135deg, #fdbb1a, #f47b30);
+  color: #4a2418;
   box-shadow: var(--shadow-button);
 }
 
@@ -559,17 +571,19 @@ input::placeholder {
   height: 48px;
   flex-shrink: 0;
   border-radius: 14px;
-  background: linear-gradient(135deg, #f78eae, #8275c5);
+  background: linear-gradient(135deg, #f47b30, #fdbb1a);
 }
 
 .barra-info {
   min-width: 0;
   flex: 1;
 }
+
 #barraNome {
   font-weight: 600;
   font-size: 15px;
 }
+
 #barraArtista {
   font-size: 13px;
   color: var(--color-text-secondary);
@@ -580,11 +594,7 @@ input::placeholder {
   height: 48px;
   border: none;
   border-radius: var(--radius-full);
-  background: linear-gradient(
-    135deg,
-    var(--color-primary),
-    var(--color-primary-light)
-  );
+  background: linear-gradient(135deg, #fdbb1a, #f47b30);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -596,6 +606,7 @@ input::placeholder {
 #barraTocar:hover:not(:disabled) {
   transform: scale(1.06);
 }
+
 #barraTocar:disabled {
   opacity: 0.45;
   cursor: not-allowed;
@@ -625,33 +636,41 @@ input::placeholder {
   .app {
     padding: 16px;
   }
+
   header {
     border-radius: var(--radius-lg);
   }
+
   .busca {
     margin-left: 0;
     max-width: none;
     order: 3;
     flex-basis: 100%;
   }
+
   #playlist,
   #admin {
     max-width: none;
   }
+
   #palco {
     padding: 24px;
   }
+
   .capa {
     width: 110px;
     height: 110px;
   }
+
   #nomeMusica {
     font-size: 32px;
   }
+
   #letra {
     font-size: 22px;
   }
 }
+
 /* ---------- Capa (opcional) ---------- */
 .capa,
 .barra-capa {
@@ -692,10 +711,10 @@ input::placeholder {
   flex-shrink: 0;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(45, 40, 80, 0.2);
+  box-shadow: 0 4px 10px rgba(110, 60, 30, 0.2);
 }
 
-/* rótulo "(opcional)" no formulário */
+/* rótulo opcional no formulário */
 #admin label small {
   font-weight: 400;
   color: var(--color-text-secondary);
