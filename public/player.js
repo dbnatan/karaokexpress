@@ -15,6 +15,10 @@ const formMusica = document.getElementById("formMusica");
 const inputId = document.getElementById("inputId");
 const inputNome = document.getElementById("inputNome");
 const inputArtista = document.getElementById("inputArtista");
+const inputCapa = document.getElementById("inputCapa");
+const capaEl = document.querySelector("#palco .capa");
+const barraCapaEl = document.querySelector(".barra-capa");
+const capaPalcoPadrao = capaEl.innerHTML; // guarda o ícone para voltar a eles
 const btnSalvar = document.getElementById("btnSalvar");
 const btnNovo = document.getElementById("btnNovo");
 const btnExcluir = document.getElementById("btnExcluir");
@@ -34,6 +38,32 @@ function mostrarMensagem(texto, tipo) {
     mensagemEl.textContent = "";
   }, 3000);
 }
+// ==========================================
+// CAPA (opcional)
+// ==========================================
+function criarImgCapa(url) {
+  const img = document.createElement("img");
+  img.src = url;
+  img.alt = "";
+  img.onerror = () => mostrarCapa(null); // link quebrado: volta ao ícone
+  return img;
+}
+
+function mostrarCapa(url) {
+  capaEl.innerHTML = capaPalcoPadrao;
+  barraCapaEl.innerHTML = "";
+  capaEl.classList.remove("com-foto");
+  barraCapaEl.classList.remove("com-foto");
+
+  if (!url) return;
+
+  capaEl.innerHTML = "";
+  capaEl.appendChild(criarImgCapa(url));
+  capaEl.classList.add("com-foto");
+
+  barraCapaEl.appendChild(criarImgCapa(url));
+  barraCapaEl.classList.add("com-foto");
+}
 
 // ==========================================
 // R1 - LISTAR MÚSICAS
@@ -48,14 +78,24 @@ async function carregarPlaylist() {
 
     for (const musica of musicas) {
       const item = document.createElement("li");
-      // IMPORTANTE: artista agora é um objeto! Temos que acessar .nome
       const nomeArtista = musica.artista ? musica.artista : "Desconhecido";
 
-      item.textContent = `${musica.nome} — ${nomeArtista}`;
+      if (musica.capa) {
+        const miniatura = document.createElement("img");
+        miniatura.src = musica.capa;
+        miniatura.alt = "";
+        miniatura.className = "miniatura";
+        miniatura.onerror = () => miniatura.remove();
+        item.appendChild(miniatura);
+      }
+
+      const texto = document.createElement("span");
+      texto.textContent = `${musica.nome} — ${nomeArtista}`;
+      item.appendChild(texto);
+
       item.style.cursor = "pointer";
 
       item.addEventListener("click", () => {
-        // Quando clica, carrega no player E preenche o formulário de admin
         escolherMusica(musica.id);
         preencherFormulario(musica);
       });
@@ -80,6 +120,7 @@ async function escolherMusica(id) {
 
     nomeEl.textContent = musica.nome;
     artistaEl.textContent = musica.artista ? musica.artista : "Desconhecido";
+    mostrarCapa(musica.capa);
 
     // Habilita o botão de tocar
     btnTocar.disabled = false;
@@ -133,6 +174,7 @@ function preencherFormulario(musica) {
     ? musica.artista.nome || musica.artista
     : "";
 
+  inputCapa.value = musica.capa || "";
   btnExcluir.disabled = false; // Habilita a exclusão
   btnSalvar.textContent = "Atualizar"; // Muda o texto do botão
 }
@@ -141,6 +183,7 @@ function limparFormulario() {
   inputId.value = "";
   inputNome.value = "";
   inputArtista.value = "";
+  inputCapa.value = "";
   btnExcluir.disabled = true;
   btnSalvar.textContent = "Salvar";
   inputNome.focus();
@@ -153,14 +196,14 @@ formMusica.addEventListener("submit", async (e) => {
   const id = inputId.value;
   const nome = inputNome.value.trim();
   const artista = inputArtista.value.trim();
+  const capa = inputCapa.value.trim(); // opcional
 
-  // R5 - Validação de campos vazios
   if (!nome || !artista) {
     mostrarMensagem("Preencha todos os campos!", "erro");
     return;
   }
 
-  const dados = { nome, artista };
+  const dados = { nome, artista, capa };
 
   try {
     let resposta;

@@ -13,7 +13,17 @@ app.use(express.json());
 // Serve os arquivos da pasta 'public' (HTML, CSS, JS do player)
 app.use(express.static(path.join(__dirname, "public")));
 
-
+// A capa é opcional: aceita vazio, ausente ou uma URL http(s)
+function capaValida(capa) {
+  if (capa === undefined || capa === null || capa === "") return true;
+  if (typeof capa !== "string") return false;
+  try {
+    const url = new URL(capa);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
 
 // 1. Listar todas as músicas
 app.get("/api/musicas", async (req, res, next) => {
@@ -44,13 +54,18 @@ app.get("/api/musicas/:id", async (req, res, next) => {
 // 3. Criar uma nova música
 app.post("/api/musicas", async (req, res, next) => {
   try {
-    const { nome, artista } = req.body;
+    const { nome, artista, capa } = req.body;
 
     if (!nome || !artista) {
       return res.status(400).json({ erro: "Nome e artista são obrigatórios" });
     }
+    if (!capaValida(capa)) {
+      return res
+        .status(400)
+        .json({ erro: "Capa deve ser uma URL http(s) válida" });
+    }
 
-    const novaMusica = await musicaDAO.inserir(nome, artista);
+    const novaMusica = await musicaDAO.inserir(nome, artista, capa);
     res.status(201).json(novaMusica);
   } catch (err) {
     next(err);
@@ -61,13 +76,18 @@ app.post("/api/musicas", async (req, res, next) => {
 app.put("/api/musicas/:id", async (req, res, next) => {
   try {
     const id = Number(req.params.id);
-    const { nome, artista } = req.body;
+    const { nome, artista, capa } = req.body;
 
     if (!nome || !artista) {
       return res.status(400).json({ erro: "Nome e artista são obrigatórios" });
     }
+    if (!capaValida(capa)) {
+      return res
+        .status(400)
+        .json({ erro: "Capa deve ser uma URL http(s) válida" });
+    }
 
-    const musicaAtualizada = await musicaDAO.atualizar(id, nome, artista);
+    const musicaAtualizada = await musicaDAO.atualizar(id, nome, artista, capa);
 
     if (!musicaAtualizada) {
       return res.status(404).json({ erro: "Música não encontrada" });
@@ -125,12 +145,10 @@ app.post("/api/musicas/:id/partes", async (req, res, next) => {
   }
 });
 
-
 app.use((err, req, res, next) => {
   console.error("Erro na API:", err.message); // Vai aparecer no terminal e nos logs da Render
   res.status(500).json({ erro: "Erro interno no servidor" });
 });
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

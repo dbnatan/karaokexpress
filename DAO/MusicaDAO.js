@@ -5,11 +5,11 @@ const { Parte } = require("../karaoke/parte");
 class MusicaDAO {
   // Transforma a linha do banco no objeto da classe Musica
   _paraMusica(linha) {
-    // Se o Supabase trouxe o artista aninhado, pegamos o nome dele
     const nomeArtista = linha.artista ? linha.artista.nome : null;
 
     const musica = new Musica(linha.nome, nomeArtista);
     musica.id = linha.id;
+    musica.capa = linha.capa_url || null;
     return musica;
   }
 
@@ -21,11 +21,11 @@ class MusicaDAO {
     return parte;
   }
 
-  // Lista todas as músicas com o nome do artista
+  // Lista todas as músicas com o nome do artista e a capa
   async listarTodas() {
     const { data, error } = await supabase
       .from("musicas")
-      .select("id, nome, artista:artistas(nome)")
+      .select("id, nome, capa_url, artista:artistas(nome)")
       .order("id");
 
     if (error) throw new Error("Erro ao listar músicas: " + error.message);
@@ -35,30 +35,27 @@ class MusicaDAO {
 
   // Busca uma música pelo ID e já traz as partes dela
   async buscarPorId(id) {
-    // 1. Busca a música
     const { data: musicaData, error: musicaError } = await supabase
       .from("musicas")
-      .select("id, nome, artista:artistas(nome)")
+      .select("id, nome, capa_url, artista:artistas(nome)")
       .eq("id", id)
-      .maybeSingle(); // Retorna null se não achar, em vez de array vazio
+      .maybeSingle();
 
     if (musicaError)
       throw new Error("Erro ao buscar música: " + musicaError.message);
-    if (!musicaData) return null; // Não achou a música
+    if (!musicaData) return null;
 
     const musica = this._paraMusica(musicaData);
 
-    // 2. Busca as partes dessa música
     const { data: partesData, error: partesError } = await supabase
       .from("partes")
       .select("id, ordem, letra, tempo_espera, tag")
       .eq("musica_id", id)
-      .order("ordem"); // Importante: ordem certa!
+      .order("ordem");
 
     if (partesError)
       throw new Error("Erro ao buscar partes: " + partesError.message);
 
-    // Adiciona as partes na música
     if (partesData) {
       musica.partes = partesData.map((linha) => this._paraParte(linha));
     }
@@ -66,39 +63,37 @@ class MusicaDAO {
     return musica;
   }
 
-  // Insere uma nova música
-  async inserir(nome, nomeArtista) {
-    // 1. Verifica se o artista já existe (buscarOuCriar)
-    let artistaId;
-    const { data: artistaExistente, error: erroBuscaArtista } = await supabase
+  // Busca ou cria o artista e devolve o id dele
+  async _obterArtistaId(nomeArtista) {
+    const { data: artistaExistente, error: erroBusca } = await supabase
       .from("artistas")
       .select("id")
       .eq("nome", nomeArtista)
       .maybeSingle();
 
-    if (erroBuscaArtista)
-      throw new Error("Erro ao buscar artista: " + erroBuscaArtista.message);
+    if (erroBusca)
+      throw new Error("Erro ao buscar artista: " + erroBusca.message);
+    if (artistaExistente) return artistaExistente.id;
 
-    if (artistaExistente) {
-      artistaId = artistaExistente.id;
-    } else {
-      // Se não existe, cria o artista
-      const { data: novoArtista, error: erroCriarArtista } = await supabase
-        .from("artistas")
-        .insert({ nome: nomeArtista })
-        .select("id")
-        .single();
+    const { data: novoArtista, error: erroCriar } = await supabase
+      .from("artistas")
+      .insert({ nome: nomeArtista })
+      .select("id")
+      .single();
 
-      if (erroCriarArtista)
-        throw new Error("Erro ao criar artista: " + erroCriarArtista.message);
-      artistaId = novoArtista.id;
-    }
+    if (erroCriar)
+      throw new Error("Erro ao criar artista: " + erroCriar.message);
+    return novoArtista.id;
+  }
 
-    // 2. Insere a música
+  // Insere uma nova música. A capa é opcional.
+  async inserir(nome, nomeArtista, capa = null) {
+    const artistaId = await this._obterArtistaId(nomeArtista);
+
     const { data: novaMusicaData, error: erroCriarMusica } = await supabase
       .from("musicas")
-      .insert({ nome: nome, artista_id: artistaId })
-      .select("id, nome")
+      .insert({ nome: nome, artista_id: artistaId, capa_url: capa || null })
+      .select("id, nome, capa_url")
       .single();
 
     if (erroCriarMusica)
@@ -106,6 +101,7 @@ class MusicaDAO {
 
     const novaMusica = new Musica(novaMusicaData.nome, nomeArtista);
     novaMusica.id = novaMusicaData.id;
+    novaMusica.capa = novaMusicaData.capa_url || null;
 
     return novaMusica;
   }
@@ -114,7 +110,6 @@ class MusicaDAO {
   async adicionarPartes(idMusica, parte) {
     if (!(parte instanceof Parte)) return false;
 
-    // Descobre qual é a próxima "ordem" (se já tem 3 partes, a nova será a 4)
     const { count, error: erroCount } = await supabase
       .from("partes")
       .select("*", { count: "exact", head: true })
@@ -125,7 +120,6 @@ class MusicaDAO {
 
     const proximaOrdem = (count || 0) + 1;
 
-    // Insere no banco
     const { error: erroInsert } = await supabase.from("partes").insert({
       musica_id: idMusica,
       ordem: proximaOrdem,
@@ -140,52 +134,34 @@ class MusicaDAO {
     return true;
   }
 
-  // Atualiza nome e artista de uma música existente
-  async atualizar(id, nome, nomeArtista) {
-    // 1. Busca a música para ver se existe
+  // Atualiza nome, artista e capa.
+  // Se "capa" vier undefined, a capa atual é mantida.
+  // Se vier vazia (""), a capa é removida.
+  async atualizar(id, nome, nomeArtista, capa) {
     const musica = await this.buscarPorId(id);
     if (!musica) return null;
 
-    // 2. Gerencia o artista (mesma lógica do inserir)
-    let artistaId;
-    const { data: artistaExistente } = await supabase
-      .from("artistas")
-      .select("id")
-      .eq("nome", nomeArtista)
-      .maybeSingle();
+    const artistaId = await this._obterArtistaId(nomeArtista);
 
-    if (artistaExistente) {
-      artistaId = artistaExistente.id;
-    } else {
-      const { data: novoArtista, error: erroCriarArtista } = await supabase
-        .from("artistas")
-        .insert({ nome: nomeArtista })
-        .select("id")
-        .single();
-      if (erroCriarArtista)
-        throw new Error("Erro ao criar artista: " + erroCriarArtista.message);
-      artistaId = novoArtista.id;
-    }
+    const dados = { nome: nome, artista_id: artistaId };
+    if (capa !== undefined) dados.capa_url = capa || null;
 
-    // 3. Atualiza a música
     const { error: erroUpdate } = await supabase
       .from("musicas")
-      .update({ nome: nome, artista_id: artistaId })
+      .update(dados)
       .eq("id", id);
 
     if (erroUpdate)
       throw new Error("Erro ao atualizar música: " + erroUpdate.message);
 
-    return await this.buscarPorId(id); // Retorna a música atualizada
+    return await this.buscarPorId(id);
   }
 
   // Remove uma música pelo ID
   async remover(id) {
-    // Busca antes para retornar o objeto removido (se o seu app.js usa isso)
     const musica = await this.buscarPorId(id);
     if (!musica) return null;
 
-    // O "on delete cascade" no banco vai apagar as partes automaticamente
     const { error } = await supabase.from("musicas").delete().eq("id", id);
 
     if (error) throw new Error("Erro ao remover música: " + error.message);
@@ -194,5 +170,4 @@ class MusicaDAO {
   }
 }
 
-// Exporta uma INSTÂNCIA única (Singleton)
 module.exports = new MusicaDAO();
