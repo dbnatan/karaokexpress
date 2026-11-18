@@ -1,28 +1,29 @@
-/* Karaokê — Amarelo, laranja e marrom + Glass */
+/* Karaokê — Soft Lavender + Glass */
 :root {
-  --color-background: #fff3d6;
-  --color-text: #4a2418;
-  --color-text-secondary: #7a5446;
-  --color-border: rgba(122, 84, 70, 0.35);
-  --color-yellow: #fdbb1a;
-  --color-orange: #f47b30;
-  --color-brown: #6b3a2a;
-  --color-brown-dark: #4a2418;
-  --color-selected-text: #6b3a2a;
-  --color-accent-light: rgba(251, 227, 214, 0.95);
-  --color-danger-text: #a02e14;
-  --grad-brand: linear-gradient(135deg, #fdbb1a, #f47b30);
+  --color-background: #dee1eb;
+  --color-surface: #f8f8fc;
+  --color-surface-alt: #e8e5f5;
+  --color-primary: #695bac;
+  --color-primary-light: #7769ba;
+  --color-primary-dark: #493c88;
+  --color-accent: #ee6891;
+  --color-accent-light: #f5dce7;
+  --color-danger-text: #a3254f;
+  --color-text: #29283a;
+  --color-text-secondary: #5e5e74;
+  --color-border: #c5c9da;
+  --color-selected-text: #493c88;
 
   /* glass */
   --glass-bg: rgba(255, 255, 255, 0.55);
   --glass-border: rgba(255, 255, 255, 0.75);
   --row-hover: rgba(255, 255, 255, 0.5);
   --row-on: rgba(255, 255, 255, 0.88);
-  --chip-bg: rgba(255, 228, 160, 0.95);
+  --chip-bg: rgba(232, 229, 245, 0.95);
   --field-bg: rgba(255, 255, 255, 0.8);
-  --mesh-a: #fdbb1a;
-  --mesh-b: #f9a56b;
-  --mesh-c: #ffe3a0;
+  --mesh-a: #c9c0f0;
+  --mesh-b: #f5c6d8;
+  --mesh-c: #bfd4f2;
 
   --font-heading: "Manrope", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -32,9 +33,9 @@
   --radius-xl: 32px;
   --radius-full: 9999px;
 
-  --shadow-glass: 0 8px 24px rgba(110, 60, 30, 0.08);
-  --shadow-elevated: 0 16px 40px rgba(244, 123, 48, 0.28);
-  --shadow-button: 0 5px 14px rgba(244, 123, 48, 0.3);
+  --shadow-glass: 0 8px 24px rgba(75, 65, 120, 0.08);
+  --shadow-elevated: 0 16px 40px rgba(75, 65, 120, 0.18);
+  --shadow-button: 0 5px 14px rgba(105, 91, 172, 0.2);
 
   --duration-fast: 150ms;
   --duration-normal: 250ms;
@@ -44,29 +45,31 @@
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---------- Tema escuro (chocolate) ---------- */
+/* ---------- Tema escuro ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-background: #1e120d;
-  --color-text: #f6e7d8;
-  --color-text-secondary: #c9a98f;
-  --color-border: rgba(255, 255, 255, 0.2);
-  --color-selected-text: #fdbb1a;
-  --color-accent-light: rgba(160, 46, 20, 0.35);
-  --color-danger-text: #ffb59a;
+  --color-background: #17162a;
+  --color-surface: #252340;
+  --color-surface-alt: #36325f;
+  --color-accent-light: #4a2a3c;
+  --color-danger-text: #f7a8c2;
+  --color-text: #edebfa;
+  --color-text-secondary: #a9a8c4;
+  --color-border: #4a4770;
+  --color-selected-text: #d5cff7;
 
-  --glass-bg: rgba(52, 32, 22, 0.6);
+  --glass-bg: rgba(37, 35, 64, 0.55);
   --glass-border: rgba(255, 255, 255, 0.12);
   --row-hover: rgba(255, 255, 255, 0.08);
   --row-on: rgba(255, 255, 255, 0.16);
-  --chip-bg: rgba(253, 187, 26, 0.18);
-  --field-bg: rgba(30, 18, 13, 0.7);
-  --mesh-a: #7a4a10;
-  --mesh-b: #7a2e10;
-  --mesh-c: #4a2a14;
+  --chip-bg: rgba(54, 50, 95, 0.9);
+  --field-bg: rgba(29, 27, 53, 0.7);
+  --mesh-a: #3b3478;
+  --mesh-b: #5a2d4c;
+  --mesh-c: #1f3a66;
 
-  --shadow-glass: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-elevated: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --shadow-glass: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -131,20 +134,15 @@ header {
   width: 40px;
   height: 40px;
   border-radius: 14px;
-  background: var(--grad-brand);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-light)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-button);
-}
-
-/* ícones sobre amarelo/laranja usam marrom escuro (o HTML os desenha em branco) */
-.logo svg,
-.avatar svg {
-  stroke: var(--color-brown-dark);
-}
-#barraTocar svg {
-  fill: var(--color-brown-dark);
 }
 
 header h1 {
@@ -194,7 +192,7 @@ header h1 {
   border: none;
   border-radius: var(--radius-full);
   background: transparent;
-  color: var(--color-brown);
+  color: var(--color-selected-text);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -209,11 +207,11 @@ header h1 {
   transform: rotate(12deg);
 }
 #btnTema:focus-visible {
-  outline: 3px solid rgba(244, 123, 48, 0.55);
+  outline: 3px solid rgba(105, 91, 172, 0.45);
   outline-offset: 2px;
 }
 :root[data-theme="dark"] #btnTema {
-  color: var(--color-yellow);
+  color: #f5c86a;
 }
 #btnTema .icone-sol {
   display: none;
@@ -229,7 +227,7 @@ header h1 {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-orange), var(--color-yellow));
+  background: linear-gradient(135deg, var(--color-accent), #f78eae);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -290,7 +288,7 @@ main {
   background: var(--row-on);
   color: var(--color-selected-text);
   font-weight: 600;
-  box-shadow: 0 5px 14px rgba(110, 60, 30, 0.1);
+  box-shadow: 0 5px 14px rgba(75, 65, 120, 0.1);
 }
 
 /* ---------- Palco ---------- */
@@ -299,10 +297,14 @@ main {
   min-width: 0;
   position: relative;
   overflow: hidden;
-  color: var(--color-brown-dark);
+  color: #fff;
   padding: 32px;
   border-radius: var(--radius-xl);
-  background: linear-gradient(145deg, #fdbb1a, #f9a01b);
+  background: linear-gradient(
+    145deg,
+    rgba(105, 91, 172, 0.96),
+    rgba(119, 105, 186, 0.92)
+  );
   box-shadow: var(--shadow-elevated);
   display: flex;
   flex-direction: column;
@@ -318,7 +320,7 @@ main {
   width: 260px;
   height: 260px;
   border-radius: var(--radius-full);
-  background: var(--color-orange);
+  background: var(--color-accent);
   opacity: 0.35;
   filter: blur(60px);
   pointer-events: none;
@@ -339,9 +341,9 @@ main {
   width: 150px;
   height: 150px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #f47b30, #c8481a);
+  background: linear-gradient(135deg, #f78eae, #8275c5);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 16px 40px rgba(110, 60, 30, 0.3);
+  box-shadow: 0 16px 40px rgba(45, 40, 80, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -362,8 +364,7 @@ main {
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
-  background: var(--color-brown);
-  color: var(--color-yellow);
+  background: rgba(255, 255, 255, 0.18);
   padding: 6px 16px;
   border-radius: var(--radius-full);
 }
@@ -381,15 +382,18 @@ main {
 
 #artista {
   font-size: 16px;
-  color: var(--color-brown);
+  color: var(--color-surface-alt);
+}
+:root[data-theme="dark"] #artista {
+  color: #d5cff7;
 }
 
 .painel-letra {
   text-align: center;
   padding: 32px 24px;
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
@@ -407,7 +411,7 @@ main {
 #contador {
   margin-top: 8px;
   font-size: 18px;
-  color: var(--color-brown);
+  color: #e8e5f5;
 }
 
 #btnTocar {
@@ -419,10 +423,10 @@ main {
   padding: 0 40px;
   border: none;
   border-radius: var(--radius-full);
-  background: var(--color-brown);
-  color: #fff;
+  background: #fff;
+  color: var(--color-primary);
   cursor: pointer;
-  box-shadow: 0 5px 14px rgba(74, 36, 24, 0.3);
+  box-shadow: 0 5px 14px rgba(45, 40, 80, 0.2);
   transition:
     transform var(--duration-normal) var(--ease-standard),
     box-shadow var(--duration-normal) var(--ease-standard);
@@ -430,12 +434,12 @@ main {
 
 #btnTocar:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(74, 36, 24, 0.36);
+  box-shadow: 0 10px 24px rgba(45, 40, 80, 0.26);
 }
 
 #btnTocar:disabled {
-  background: rgba(74, 36, 24, 0.18);
-  color: rgba(74, 36, 24, 0.6);
+  background: rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.85);
   box-shadow: none;
   cursor: not-allowed;
 }
@@ -471,8 +475,8 @@ main {
 #admin input[type="text"]:focus,
 .busca input:focus {
   outline: none;
-  border-color: var(--color-orange);
-  box-shadow: 0 0 0 3px rgba(244, 123, 48, 0.3);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(105, 91, 172, 0.2);
 }
 
 input::placeholder {
@@ -508,8 +512,12 @@ input::placeholder {
 }
 
 #btnSalvar {
-  background: var(--grad-brand);
-  color: var(--color-brown-dark);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-light)
+  );
+  color: #fff;
   box-shadow: var(--shadow-button);
 }
 
@@ -551,7 +559,7 @@ input::placeholder {
   height: 48px;
   flex-shrink: 0;
   border-radius: 14px;
-  background: linear-gradient(135deg, #f47b30, #fdbb1a);
+  background: linear-gradient(135deg, #f78eae, #8275c5);
 }
 
 .barra-info {
@@ -572,7 +580,11 @@ input::placeholder {
   height: 48px;
   border: none;
   border-radius: var(--radius-full);
-  background: var(--grad-brand);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-light)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -639,4 +651,52 @@ input::placeholder {
   #letra {
     font-size: 22px;
   }
+}
+/* ---------- Capa (opcional) ---------- */
+.capa,
+.barra-capa {
+  overflow: hidden;
+}
+
+.capa.com-foto,
+.barra-capa.com-foto {
+  background: none;
+  padding: 0;
+}
+
+.capa img,
+.barra-capa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* miniatura na playlist */
+#playlist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#playlist li span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.miniatura {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(45, 40, 80, 0.2);
+}
+
+/* rótulo "(opcional)" no formulário */
+#admin label small {
+  font-weight: 400;
+  color: var(--color-text-secondary);
 }
