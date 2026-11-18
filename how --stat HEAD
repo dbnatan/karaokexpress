@@ -1,0 +1,15 @@
+[33mcommit 72ee379ca5389a5b4deddc865a5522c4d983cdc0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/origin/main[m[33m)[m
+Author: dbnatan <natanbarbosa.pf019@academico.ifsul.edu.br>
+Date:   Tue Nov 17 21:53:38 2026 -0300
+
+    Alterações no css e inclusao de tema escuro e claro, junto com possibilidade de imagens nas musicas
+
+ DAO/MusicaDAO.js  | 105 [32m+++[m[31m-----[m
+ app.js            |  32 [32m++[m[31m-[m
+ package-lock.json |   1 [31m-[m
+ public/Barra.js   |  46 [32m++++[m
+ public/Tema.js    |  26 [32m++[m
+ public/estilo.css | 721 [32m+++++++++++++++++++++++++++++++++++++++++++++++++[m[31m-----[m
+ public/index.html | 320 [32m++++++++++++++++[m[31m--------[m
+ public/player.js  |  53 [32m+++[m[31m-[m
+ 8 files changed, 1064 insertions(+), 240 deletions(-)
